@@ -15,39 +15,23 @@
 
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 
-    <!-- Category Modal Starts -->
+    <!-- speciality Modal Starts -->
     <!--begin::Modal-->
-    <div class="modal fade" id="category-add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="speciality-add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Add New Category</h5>
+                    <h5 class="modal-title" id="modal-title">Add New Speciality</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="add-category">
+                    <form method="post" id="add-speciality">
+                    <input type="hidden" name="action" value="add_speciality">
                         <div class="form-group">
-                            <label for="recipient-name" class="form-control-label">Category Name</label>
-                            <input type="text" class="form-control" id="category-name" name="category_name">
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="form-control-label">Sort Order</label>
-                            <input type="number" class="form-control" id="sort-order" name="sort_order">
-                            <input type="hidden" name="action" value="add_category">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="form-control-label">Parent Category</label>
-                            <select class="category form-control" name="parent_id">
-                                <option value="">Select Parent</option>
-                                <?php
-                                foreach ($parents as $parent) { ?>
-                                    <option value="<?= $parent['id'];?>"><?= $parent['name'];?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
+                            <label for="recipient-name" class="form-control-label">Speciality Name</label>
+                            <input type="text" class="form-control" id="speciality-name" name="speciality_name" required>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -59,36 +43,26 @@
         </div>
     </div>
 
-    <!-- Category Modal Ends -->
+    <!-- speciality Modal Ends -->
 
-    <!-- Category Modal Starts -->
+    <!-- speciality Modal Starts -->
     <!--begin::Modal-->
-    <div class="modal fade" id="category-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="speciality-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Edit Category</h5>
+                    <h5 class="modal-title" id="modal-title">Edit Speciality</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="edit-category">
-                    	<input type="hidden" id="edit-category-id" name="category_id">
-                    	<input type="hidden" name="action" value="update_category">
+                    <form method="post" id="edit-speciality">
+                    	<input type="hidden" id="edit-speciality-id" name="speciality_id">
+                    	<input type="hidden" name="action" value="update_speciality">
                         <div class="form-group">
-                            <label for="recipient-name" class="form-control-label">Category Name</label>
-                            <input type="text" class="form-control" id="edit-category-name" name="category_name">
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="form-control-label">Sort Order</label>
-                            <input type="number" class="form-control" id="edit-sort-order" name="sort_order">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="form-control-label">Parent Category</label>
-                            <select class="category form-control" name="parent_id" id="edit-parent_id">
-                                
-                            </select>
+                            <label for="recipient-name" class="form-control-label">Speciality Name</label>
+                            <input type="text" class="form-control" id="edit-speciality-name" name="speciality_name" required>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -100,7 +74,7 @@
         </div>
     </div>
 
-    <!-- Category Modal Ends -->
+    <!-- speciality Modal Ends -->
     <!-- begin:: Page -->
     <div class="m-grid m-grid--hor m-grid--root m-page">
 
@@ -129,14 +103,14 @@
                                     <div class="m-portlet__head-caption">
                                         <div class="m-portlet__head-title">
                                             <h3 class="m-portlet__head-text">
-                                                Manage Categories
+                                                Manage Specialities
                                             </h3>
                                         </div>
                                     </div>
                                     <div class="m-portlet__head-tools">
                                         <ul class="m-portlet__nav">
-                                            <li class="m-portlet__nav-item" data-toggle="m-tooltip" data-placement="top" title="Add new Category">
-                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#category-add-modal" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-plus"></i></a>
+                                            <li class="m-portlet__nav-item" data-toggle="m-tooltip" data-placement="top" title="Add new Speciality">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#speciality-add-modal" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-plus"></i></a>
                                             </li>
                                             <li class="m-portlet__nav-item">
                                                 <a href="" class="m-portlet__nav-link m-portlet__nav-link--icon" data-toggle="m-tooltip" data-placement="top" title="Reload"><i class="la la-refresh"></i></a>
@@ -145,23 +119,23 @@
                                     </div>
                                 </div>
                                 <div class="m-portlet__body">
-                                    <table class="table table-striped- table-bordered table-hover table-checkable" id="category-table">
+                                    <table class="table table-striped- table-bordered table-hover table-checkable" id="speciality-table">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Category Name</th>
+                                                <th>#</th>
+                                                <th>Speciality Name</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        foreach ($lists as $list) { ?>                                       
+                                        foreach ($specialities["data"] as $speciality) { ?>                                       
                                         <tr>
-                                                <td><?= $list["cat_id"]; ?></td>
-                                                <td><?= $list["name"]; ?></td>
+                                                <td><?= $speciality[0]; ?></td>
+                                                <td><?= $speciality[2]; ?></td>
                                                 <td>
-                                                	<button class="btn btn-success btn-sm rounded-0 edit_category_btn" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" data-category_id="<?= $list["cat_id"]; ?>"><i class="fa fa-edit"></i></button>
-                                                	<button class="btn btn-danger btn-sm rounded-0 remove_category_btn" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" data-category_id="<?= $list["cat_id"]; ?>"><i class="fa fa-trash"></i></button>
+                                                	<button class="btn btn-success btn-sm rounded-0 edit_speciality_btn" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" data-speciality_id="<?= $speciality[1]; ?>"><i class="fa fa-edit"></i></button>
+                                                	<button class="btn btn-danger btn-sm rounded-0 remove_speciality_btn" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" data-speciality_id="<?= $speciality[1]; ?>"><i class="fa fa-trash"></i></button>
                                                 </td>
                                         </tr>
                                         <?php } ?>
@@ -200,11 +174,7 @@
     <!--end::Page Scripts -->
 </body>
 <script>
-    $('.category').select2({
-        placeholder: "Select a Parent Category",
-        allowClear: true
-    });
-    $('#category-table').DataTable();
+    $('#speciality-table').DataTable();
 </script>
 <!-- end::Body -->
 

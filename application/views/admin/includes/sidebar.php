@@ -22,8 +22,8 @@
                   <div class="m-menu__submenu " m-hidden-height="160" style="display: none; overflow: hidden;"><span class="m-menu__arrow"></span>
                       <ul class="m-menu__subnav">
                           <li class="m-menu__item" aria-haspopup="true"><a href="<?php echo base_url('web/catalog/categories')?>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Categories</span></a></li>
-                          <li class="m-menu__item" aria-haspopup="true"><a href="#" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Products</span></a></li>
-                          <li class="m-menu__item" aria-haspopup="true"><a href="#" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Specialities</span></a></li>
+                          <li class="m-menu__item" aria-haspopup="true"><a href="<?php echo base_url('web/catalog/products')?>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Products</span></a></li>
+                          <li class="m-menu__item" aria-haspopup="true"><a href="<?php echo base_url('web/catalog/specialities')?>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Specialities</span></a></li>
                       </ul>
                   </div>
               </li>

@@ -118,6 +118,8 @@ defined('TABLE_TRANSACTION')           OR define('TABLE_TRANSACTION', 'transacti
 defined('TABLE_RECENTLY_VIEWED')       OR define('TABLE_RECENTLY_VIEWED', 'recently_viewed');
 
 
+defined('TABLE_SPECIALITIES')          OR define('TABLE_SPECIALITIES', 'specialities');
+
 /*
  * Roles
  * For Admin 1 

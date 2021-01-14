@@ -25,6 +25,8 @@
 
 <!--end::Global Theme Styles -->
 
+<link rel='stylesheet' href='<?php echo base_url('assets/css/sweetalert.css') ?>' />
+
 <!--begin::Page Vendors Styles -->
 <link href="<?php echo base_url('assets/vendors/custom/fullcalendar/fullcalendar.bundle.css') ?>" rel="stylesheet" type="text/css" />
 
@@ -86,5 +88,153 @@
     }
     .strong {
         font-weight: 600;
+    }
+    input.error {
+    /*border: 1px red !important;*/
+    /*border:1px solid red;*/
+    }
+    label.error{
+        width: 100%;
+        color: red;
+        font-style: italic;
+        margin-left: 120px;
+        margin-bottom: 5px;
+    }
+    select.input-validation-error 
+    { 
+      /*border:1px solid red;*/
+    }
+    select.error 
+    { 
+      /*border:1px solid red;*/
+    }
+    .userform input.submit {
+        margin-left: 120px;
+    }
+    .isDisabled {
+      color: currentColor;
+      cursor: not-allowed;
+      opacity: 0.5;
+      text-decoration: none;
+    }
+    .ajaxloader{
+        width: 33px;
+        float: right;
+        padding: 2px;
+    }
+    .ajax_modal
+    {
+        position: fixed;
+        z-index: 999;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: Black;
+        filter: alpha(opacity=60);
+        opacity: 0.6;
+        -moz-opacity: 0.8;
+    }
+    .center
+    {
+        z-index: 1000;
+        margin: 300px auto;
+        padding: 10px;
+        width: 150px;
+        background-color: White;
+        border-radius: 10px;
+        filter: alpha(opacity=100);
+        opacity: 1;
+        -moz-opacity: 1;
+    }
+    .center img
+    {
+        height: 128px;
+        width: 128px;
+    }
+    .datepicker .datepicker-dropdown
+    {
+       z-index: 77777777 !important;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+    article {
+      width: 80%;
+      margin: auto;
+      margin-top: 10px;
+    }
+
+    .thumbnail {
+      height: 100px;
+      margin: 10px;
     }
 </style>

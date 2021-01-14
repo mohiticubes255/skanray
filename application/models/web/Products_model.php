@@ -15,27 +15,55 @@ class Products_model extends DBHelper
 
     public function add_product($images, $pid = FALSE)
     {
-        $per = $this->input->post('per');
+        // var_dump($images);
+        // $per = $this->input->post('per');
+        $oldImg = '';
+        if($pid){
+          $product = $this->get_product($pid);
+          if($product[0]['images']){
+            $oldImg = $product[0]['images'];
+          }
+        }
         $data['product_name'] = $this->input->post('product_name');
+        $data['price'] = $this->input->post('price');
+        $data['dicount_price'] = $this->input->post('dicount_price');
         $data['category_id'] = $this->input->post('category_id');
+        $data['speciality_id'] = $this->input->post('speciality_id');
+        $data['features'] = implode('|', $this->input->post('features'));
+        // if($images[0][0]["file"]["data"]["file_name"]){
+        //     $data['images'] = $images[0][0]["file"]["data"]["file_name"];
+        // }
+        if($images[0] && $oldImg){
+            $data['images'] = $oldImg.'|'.implode('|', $images[0]);
+        }elseif($images[0]){
+            $data['images'] = implode('|', $images[0]);
+        }else{
+            $data['images'] = $oldImg;
+        }
+        // $data['images'] = $oldImg.implode('|', $images[0]);
         $data['description'] = $this->input->post('product_description');
         $data['summary'] = $this->input->post('product_summary');
-        $data['status'] = $this->input->post('status');
+        if($this->input->post('status')){
+            $data['status'] = 'y';
+        }else{
+            $data['status'] = 'n';
+        }
+        // $data['status'] = $this->input->post('status');
 
         if (!$data['category_id']) {
             return $this->response->response(STATUS_FAILED, RESPONSE_INVALID_REQUEST, "Please select Category Name.", array());
         }
-        if (count($per) == 0) {
-            return $this->response->response(STATUS_FAILED, RESPONSE_INVALID_REQUEST, "Please add atleast 1 varient.", array());
-        }
+        // if (count($per) == 0) {
+            // return $this->response->response(STATUS_FAILED, RESPONSE_INVALID_REQUEST, "Please add atleast 1 varient.", array());
+        // }
         if ($pid) {
             $this->update(TABLE_PRODUCTS, $data, array('id' => $pid));
-            $this->add_varients($pid, $images);
+            // $this->add_varients($pid, $images);
             return $this->response->response(STATUS_SUCCESS, RESPONSE_STATUS_OK, "Product has been Updated.", array());
         }
         $insert_id = $this->insert(TABLE_PRODUCTS, $data);
         if ($insert_id) {
-            $this->add_varients($insert_id, $images);
+            // $this->add_varients($insert_id, $images);
             return $this->response->response(STATUS_SUCCESS, RESPONSE_STATUS_OK, "Product has been Added.", array());
         }
         return $this->response->interal_error();
@@ -71,10 +99,14 @@ class Products_model extends DBHelper
             // $product_image = base_url('assets/uploads/products/small/') . $images[0];
             $tmp[] = "<input type='checkbox' class='products' value='" . $product['id'] . "' name='pid[]' />";
             // $tmp[] = "<img src='$product_image' width='50' height='50' alt='image' />";
+            $tmp[] = $product['id'];
             $tmp[] = $product['product_name'];
             $tmp[] = $product['name'];
+            $tmp[] = $product['price'];
+            $tmp[] = $product['dicount_price'];
+            $tmp[] = 100 * ($product['price'] - $product['dicount_price']) / $product['price'];
             $tmp[] = ($product['status'] == 'y' ? 'Enabled' : 'Disabled');
-            $edit_btn = "<a href='" . base_url('web/catalog/edit_product/') . $product['id'] . "'><button class='btn btn-primary' title='Edit Product'><i class='fas fa-edit'></i></button></a>";
+            $edit_btn = "<a href='" . base_url('web/catalog/edit_product/') . $product['id'] . "'><button class='btn btn-primary' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit'><i class='fas fa-edit'></i></button></a>";
             $tmp[] = "$edit_btn";
             array_push($result, $tmp);
         }
@@ -94,7 +126,7 @@ class Products_model extends DBHelper
         $selling_price = $this->input->post('selling_price');
         $stocks = $this->input->post('stocks');
         $batch = array();
-        if (count($per) > 0) {
+        // if (count($per) > 0) {
             $varients = $this->select("images, per, unit", TABLE_PRODUCTS_ADDITIONAL, array('product_id' => $pid));
             $this->delete(TABLE_PRODUCTS_ADDITIONAL, array('product_id' => $pid));
             for ($i = 0; $i < count($per); $i++) {
@@ -114,7 +146,7 @@ class Products_model extends DBHelper
                 $tmp['stocks'] = $stocks[$i];
                 array_push($batch, $tmp);
             }
-        }
+        // }
         if ($this->db->insert_batch(TABLE_PRODUCTS_ADDITIONAL, $batch)) {
             return true;
         }

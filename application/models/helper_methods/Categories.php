@@ -10,7 +10,8 @@ class Categories extends DBHelper
 
     public function save_category($data, $icon, $cat_id = FALSE)
     {
-        $parent_id = $data['parent_id'];
+        // $parent_id = $data['parent_id'];
+        $parent_id = $data['parent_id'] = $this->input->post('parent_id');
         if ($cat_id) {
             // Update Category 
             if ($parent_id == $cat_id) {

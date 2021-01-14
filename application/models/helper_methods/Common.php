@@ -15,7 +15,7 @@ class Common extends DBHelper
         $data['limit'] = $this->input->post('length');
         $data['order'] = $this->input->post('order');
         $search = $this->input->post('search');
-        $data['search'] = $search['value'];
+        @$data['search'] = $search['value'];
         return $data;
     }
 

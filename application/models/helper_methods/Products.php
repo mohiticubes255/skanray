@@ -80,7 +80,7 @@ class Products extends DBHelper
 
     private function remove_images($images_arr)
     {
-        $folder_path = FCPATH . "assets/uploads/products";
+        $folder_path = FCPATH . "uploads/products";
 
         foreach ($images_arr as $image) {
             if ($image) {
