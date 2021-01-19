@@ -29,7 +29,7 @@ class Shop extends BaseController {
         $config['smtp_crypto']      = 'ssl';
         $config['smtp_timeout'] = '7';
         $config['smtp_user']    = 'mohit.chack@icubeswire.com';
-        $config['smtp_pass']    = '******';
+        $config['smtp_pass']    = 'mohitchack';
         $config['charset']    = 'utf-8';
         $config['newline']    = "\r\n";
         $config['mailtype'] = 'html'; // or html
