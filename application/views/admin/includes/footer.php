@@ -599,4 +599,81 @@
         })
             setTimeout("location.reload(true);", 1000);
         });
+
+        $(document).on('click','.edit_order_btn',function(){
+        var order_id = $(this).data('order_id');
+        $('#order-edit-modal').modal('show');
+        $.ajax({
+                url: BASE_URL+'web/sales/get_order',
+                type: "POST",
+                data: {order_id:order_id},
+                dataType:'json',
+                // // crossDomain: true,
+                // // async: false,
+                beforeSend: function () {
+                $(".ajax_modal").show();
+                },
+                complete: function () {
+                    $(".ajax_modal").hide();
+                },
+                success: function(res) {
+                    // if(res.status == true){
+                        $('#edit-order-id').val(res.id);
+                        $('#edit-delever').val(res.delever);
+                        $('#edit-payment_status').val(res.payment_status);
+                        $('#edit-order-id').val(res.id);
+                    // }
+                }
+            })
+        });
+
+        $("#edit-order-form").submit(function(event) {
+        /* stop form from submitting normally */
+        event.preventDefault();
+        var formData = $("#edit-order-form").serialize(); 
+        console.log(formData);
+        $.ajax({
+            url: BASE_URL+'web/sales/edit_order',
+            type: "POST",
+            data: formData,
+            dataType:'json',
+            // // crossDomain: true,
+            // // async: false,
+            beforeSend: function () {
+            $(".ajax_modal").show();
+            },
+            complete: function () {
+                $(".ajax_modal").hide();
+            },
+            success: function(res) {
+                // if(res.result == 'success'){
+              // $('.show_message').html(res.message);
+              swal({
+              title: res.msg,
+              text: res.msg,
+              icon: res.icon,
+              
+              buttons: {
+              // cancel: {
+                // text: "Cancel",
+                // value: null,
+                // visible: true,
+                
+                // closeModal: true,
+              // },
+              confirm: {
+                text: "OK",
+                value: true,
+                visible: true,
+               
+                closeModal: true
+              },
+              }
+            })
+            // }
+            // console.log(res);
+        }
+        })
+            setTimeout("location.reload(true);", 1000);
+        });
 </script>

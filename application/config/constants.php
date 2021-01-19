@@ -119,6 +119,10 @@ defined('TABLE_RECENTLY_VIEWED')       OR define('TABLE_RECENTLY_VIEWED', 'recen
 
 
 defined('TABLE_SPECIALITIES')          OR define('TABLE_SPECIALITIES', 'specialities');
+defined('TABLE_ADD_TO_CART')          OR define('TABLE_ADD_TO_CART', 'add_to_card');
+defined('TABLE_ALL_ORDER')          OR define('TABLE_ALL_ORDER', 'all_order');
+defined('TABLE_ORDER_PRODUCT')          OR define('TABLE_ORDER_PRODUCT', 'oreder_product');
+defined('TABLE_ALL_ORDER')          OR define('TABLE_ALL_ORDER', 'all_order');
 
 /*
  * Roles

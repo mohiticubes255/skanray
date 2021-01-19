@@ -26,7 +26,7 @@
 <!--end::Global Theme Styles -->
 
 <link rel='stylesheet' href='<?php echo base_url('assets/css/sweetalert.css') ?>' />
-
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <!--begin::Page Vendors Styles -->
 <link href="<?php echo base_url('assets/vendors/custom/fullcalendar/fullcalendar.bundle.css') ?>" rel="stylesheet" type="text/css" />
 
@@ -237,4 +237,22 @@
       height: 100px;
       margin: 10px;
     }
+    .label-success {
+        background-color: #5cb85c;
+    }
+    .label-warning {
+        background-color: #f0ad4e;
+    }
+    .label {
+      display: inline;
+      padding: .2em .6em .3em;
+      font-size: 75%;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: .25em;
+  }
 </style>

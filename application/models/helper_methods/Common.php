@@ -18,5 +18,4 @@ class Common extends DBHelper
         @$data['search'] = $search['value'];
         return $data;
     }
-
 }

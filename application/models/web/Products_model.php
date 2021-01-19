@@ -24,7 +24,7 @@ class Products_model extends DBHelper
             $oldImg = $product[0]['images'];
           }
         }
-        $data['product_name'] = $this->input->post('product_name');
+        $data['product_name'] = str_replace("-"," ",$this->input->post('product_name'));
         $data['price'] = $this->input->post('price');
         $data['dicount_price'] = $this->input->post('dicount_price');
         $data['category_id'] = $this->input->post('category_id');
@@ -206,6 +206,11 @@ class Products_model extends DBHelper
     public function get_product($pid)
     {
         return $this->select("*", TABLE_PRODUCTS, array('id' => $pid), false, 1);
+    }
+
+    public function get_product_with_where($where)
+    {
+        return $this->select("*", TABLE_PRODUCTS, $where, false, 1);
     }
 
     public function get_product_varients($pid)
