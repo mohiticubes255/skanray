@@ -52,29 +52,94 @@ class Shop extends BaseController {
             
             $this->base_domain = base_url();
     }
-
-    public function index() {
+    public function index()
+    {
+        $data = array();
+        $data['categories'] = $this->shop_model->get_categories();
+        $data['specialities'] = $this->shop_model->get_specialities();
+        $data['min_price'] = $this->shop_model->get_min_price();
+        $data['max_price'] = $this->shop_model->get_max_price();
+        $this->load->view('shop/index', $data);
+    }
+    public function fetch_data() 
+    {
+        $categories = $this->input->post('categories');
+        $specialities = $this->input->post('specialities');
+        $minimum_price = $this->input->post('minimum_price');
+        $maximum_price = $this->input->post('maximum_price');
+        $this->load->library('pagination');
         $config = array();
-        $config["base_url"] = base_url() . "shop";
-        $config["total_rows"] = $this->shop_model->get_count();
-        $config["per_page"] = 9;
-        $config["uri_segment"] = 2;
-
+        $config['base_url'] = '#';
+        $config['total_rows'] = $this->shop_model->get_count($categories,$specialities,$minimum_price,$maximum_price);
+        $config['per_page'] = 9;
+        $config['uri_segment'] = 3;
+        $config['use_page_numbers'] = TRUE;
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['next_link'] = '&gt;';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_link'] = '&lt;';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = "<li class='active'><a href='#'>";
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['num_links'] = 3;
         $this->pagination->initialize($config);
 
-        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-
-        $data["links"] = $this->pagination->create_links();
-
-        $data['products'] = $this->shop_model->get_products($config["per_page"], $page);
-
-        $this->load->view('shop/index', $data);
+        $page = (int)($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $start = ($page - 1) * $config['per_page'];
+        if($start < 0)
+        {
+            $start = 1;
+        }
+        $products = $data['products'] = $this->shop_model->get_products($config["per_page"], $start, $categories,$specialities,$minimum_price,$maximum_price);
+        // var_dump($this->db->last_query());
+        $list = '';
+        
+        foreach ($products as $product){ $image = explode("|",$product->images); $features = explode("|",$product->features);
+        $img = ($image[0] != '') ? base_url().'uploads/products/'.$image[0] : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
+        $list .= '<input type="hidden" id="price_'.$product->id.'" value="'.$product->dicount_price.'">
+            <input type="hidden" id="quenty_'.$product->id.'" value="1">
+                <div class="col-md-4 mt-2 singleProduct">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-img-actions"> <img src="'.$img.'" class="card-img img-fluid" width="96" height="350" alt=""> </div>
+                        </div>
+                        <div class="card-body bg-light text-center">
+                            <div class="mb-2">
+                                <h6 class="font-weight-semibold mb-2"> <a href="'.base_url().'product/'.implode("-",explode(" ",$product->product_name)).'" class="text-default mb-2" data-abc="true">'.$product->product_name.'</a> </h6> <a href="#" class="text-muted" data-abc="true">'.$features[0].'</a>
+                            </div>
+                            <h3 class="mb-0 font-weight-semibold"><b>Rs.'.$product->dicount_price.'</b> <del>Rs.'.$product->price.'</del> ('.number_format((float) 100 * ($product->price - $product->dicount_price) / $product->price, 2, '.', '').'%'.')</h3>
+                            <div> <i class="fa fa-star star"></i> <i class="fa fa-star star"></i> <i class="fa fa-star star"></i> <i class="fa fa-star star"></i> </div>
+                            <button type="button" class="btn bg-cart add_to_card" data-id="'.$product->id.'"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
+                        </div>
+                    </div>
+                </div>';
+        }
+        $start = ($page - 1) * $config['per_page'];
+        if(empty($list))
+        {
+            $list = '<div class="col-md-12 mt-2 "><div class="card text-center"><h3 class="mb-0 font-weight-semibold">No Product Found!</h3></div></div>';
+        }
+        $output = array(
+         'pagination_link'  => $this->pagination->create_links(),
+         'product_list'   => $list
+        );
+        echo json_encode($output);
     }
     public function product() {
         $product_name = implode(" ",explode("-",$this->uri->segment(2)));
         $where = array('product_name'=>$product_name);
         $data['product'] = $product = $this->products->get_product_with_where($where);
         $data['title'] = @$product[0]['product_name'];
+        var_dump($data['product']);
         $this->load->view('shop/product_detailed',$data);
     }
 
@@ -89,7 +154,6 @@ class Shop extends BaseController {
             $product_id=$this->input->post('product_id');
             $product_price=$this->input->post('product_price');
             $product_que=$this->input->post('product_que');
-
         }
 
         if($status == 'fill_card')
@@ -115,7 +179,6 @@ class Shop extends BaseController {
                 $data['quenty'] = $que;
                 $data['total_amount'] = $price*$que;
                 $result = $this->cart_model->add_to_cart($data);
-
             }
 
         }
